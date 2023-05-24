@@ -1,0 +1,4 @@
+Trebamo staviti ip,host koji napadamo,dje primamo host,
+
+i trebamo staviti nase jump location sve imamo u kodu
+samo to moramo izmjeniti.

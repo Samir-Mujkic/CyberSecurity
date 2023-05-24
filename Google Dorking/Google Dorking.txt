@@ -1,0 +1,78 @@
+Finding FTP Servers & Websites Using HTTP
+To start, we'll use the following dork to search for file transfer servers published sometime this year. Searching for these servers can allow us to find files that are supposed to be internal, but were unknowingly made public.
+
+intitle:"index of" inurl:ftp after:2018
+
+
+
+These servers become public because the index file of their FTP server is the kind of data that Google loves to scan — a fact people tend to forget. Google's scanning leads to a complete list of all the files contained within the server being searchable on Google.
+
+If we want to find insecure webpages still using HTTP to poke at, we can modify the command slightly to do so by changing the "ftp" to "http" and re-running the search.
+
+intitle:"index of" inurl:http after:2018
+
+
+
+Searching that string should produce a list of lots and lots of websites using HTTP, ready to be attacked. But if we're looking for a specific type of site, we can go even further.
+
+If we want to start attacking some easy targets, we can be more specific and search for online forms still using HTTP by changing the text in the search title.
+
+intitle:"forum" inurl:http after:2018
+
+
+
+We can keep adding search operators like AND inurl:"registration" to get more specific and hunt down the registration pages of insecure form websites.
+
+Here you can see we've found a list of vulnerable online forums using HTTP.
+
+Step 1Find Log Files with Passwords
+The next step will be to search for files of the .LOG type. Searching for LOG files will allow us to look for clues about what the credentials to the system or various user or admin accounts might be.
+
+The dork we'll be using to do this is as follows.
+
+
+allintext:password filetype:log after:2018
+
+
+
+
+When searching for current log files exposed to the internet, we find this almost immediately.
+
+This log states that the password is the default one, which takes just a simple Google search of the OpenCast Project website to discover. With one search, we've possibly found the credentials to this system without hacking anything at all.
+
+Step 2Find Configuration Files with Passwords
+Configuration files should not be public pretty much ever, and .ENV files are great examples of this. If we search for .ENV files that contain a string for the database password, we instantly find the password to this database we've discovered.
+
+
+filetype:env "DB_PASSWORD" after:2018
+
+
+
+If we remove the after:2018 we can see older log files also exposing services to the internet.
+
+Step 3Find Email Lists
+Email lists are a great way of scraping email addresses and trying to find information on corporate or school targets. These lists are frequently exposed by companies or schools that are trying to organize email lists for their members.
+
+To find them, we'll be looking for spreadsheet .XLS file type with the string "email.xls" in the URL.
+
+Find Open Cameras
+Finally, if you thought Shodan was the only service that can find weird open cameras, you were dead wrong. Camera login and viewing pages are usually HTTP, meaning Google is happy to index them and provide them for viewing if you know the right search string.
+
+One common format for webcam strings is searching for "top.htm" in the URL with the current time and date included. You'll find a lot of results this way.
+
+
+
+inurl:top.htm inurl:currenttime
+
+
+
+Another dork for cameras that produces outstanding results searches for a common live-view page hosted on routers.
+
+
+
+inurl:"lvappl.htm"
+
+
+
+Using this dork, I was able to locate the best camera of all, the birdcam1.
+
